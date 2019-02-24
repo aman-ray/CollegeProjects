@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>D3 Tutorial</title>
+    <script src="https://d3js.org/d3.v3.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        var svgElement = d3.select("body")
+            .append("svg")
+            .attr({
+                "width": 500,
+                "height": 500
+            });
+        //create a linear scale to map data to pixels, domain is [0,50] and range is [10,400]
+        var xScale = d3.scale.linear().domain([0, 50]).range([10, 400]);
+        //create a axis based on the scale
+        var xAxis = d3.svg.axis().scale(xScale)
+            .ticks(5) //limit number of ticks to 5
+            .orient("bottom"); //horizontal axis with labels to  the bottom 
+        //create a new group to hold the axis
+        var x = svgElement.append("g")
+            .call(xAxis);
+
+
+        //Create a date parser
+        //var ParseDate = d3.time.format("%d-%b-%y").parse;
+        var parseDate = d3.time.format("%Y-%m-%d").parse
+
+        //Read TSV file
+        d3.csv("CSV.csv", function(error, data){
+        //Parse Data into useable format
+        data.forEach(function(d){
+        console.log(d.Date)
+        d.Date = parseDate(d.Date);
+        
+        d.Close = +d.Close;
+        //the + sign converts numeric string to number
+        });
+
+        //Print the data as a table in the console
+        console.table(data);
+        });
+        var valueline = d3.svg.line()
+        .x(function(d){
+        return xScale(d.date);
+        })
+        .y(function(d){
+        return yScale(d.close);
+        });
+    </script>
+</body>
+<style>
+    path{
+stroke: steelblue;
+fill: none;
+stroke-width: 2;
+}
+</style>
+
+</html>

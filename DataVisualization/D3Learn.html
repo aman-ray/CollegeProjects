@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>D3 Tutorial</title>
+    <script src="https://d3js.org/d3.v3.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // d3.select("body").append("p").text("Our First Paragraph using D3!").style({"font-size":"40px","font-family":"arial"});
+     var data_values = [5,10,30,8,45,24,16,55,60];
+    // var p = d3.selectAll("p").data(data_values).enter().append("p")
+    // p.text(function(value){return value;});
+    // p.style({"font-size":"20px","font-family":"arial"});
+        //We will write our D3 code here
+    
+    //Creating a circle
+    var svg = d3.select("body").append("svg").attr({"width":450,"height":400});
+    svg.append("circle").attr({"r":"30px", "cx":"50px", "cy":"50px"});
+
+    var bars = svg.append("rect").attr({"x":"30px", "y":"30px", "width":"30px", "height":"150px"});
+    bars.attr("fill", "blue"); //fill the rect with blue
+
+    //Creating the triangle that has been 
+    var bars = svg.selectAll("rect").data(data_values).enter().append("rect").attr("width","25px").attr("height", function(d){ console.log(d);return d*5; });
+    bars.attr("x", function(d,i){ console.log(d+"-"+i);return (i+1)*30; });
+
+
+    </script>
+</body>
+
+</html>
