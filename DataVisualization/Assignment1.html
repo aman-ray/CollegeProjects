@@ -41,9 +41,10 @@
             .attr('class', 'subtitle right')
             .html('April 1854 - March 1855');
 
-
-        d3.csv('DataAssignments.csv')
+        dataGloabal=[];
+        setTimeout(d3.csv('DataAssignments.csv')
             .then(function (data) {
+                dataGloabal=data;
                 console.log(data)
                 data.forEach(function (d) {
                     d.date = format.parse(d.date);
@@ -55,13 +56,33 @@
                     d.disease = d.disease_1000;
                     d.wounds = d.wounds_1000;
                     d.other = d.other_1000;
-                });
-                console.log('111111111111111111');
-                // data is now whole data set
-                // draw chart in here!
-                // Get the maximum value:
-                // Get the maximum value:
-				var maxVal = d3.max( data, function(d) {
+                });})
+            .catch(function (error) {
+                // handle error   
+            }), 100);
+        
+
+        console.log(dataGloabal);
+        // d3.csv('DataAssignments.csv')
+        //     .then(function (data) {
+        //         console.log(data)
+        //         data.forEach(function (d) {
+        //             d.date = format.parse(d.date);
+        //             d.label = labels[d.date.getMonth()];
+
+        //             // Calculate the average annual mortality, as done by Nightingale:
+        //             // http://understandinguncertainty.org/node/214 
+        //             scalar = 1000 * 12 / d.army_size;
+        //             d.disease = d.disease_1000;
+        //             d.wounds = d.wounds_1000;
+        //             d.other = d.other_1000;
+        //         });
+        //         console.log('111111111111111111');
+        //         // data is now whole data set
+        //         // draw chart in here!
+        //         // Get the maximum value:
+        //         // Get the maximum value:
+				var maxVal = d3.max( dataGloabal, function(d) {
 					return d3.max( [d.disease, d.wounds, d.other] );
 				});
 
@@ -69,8 +90,8 @@
 				var maxRadius = Math.sqrt(maxVal*12 / Math.PI);
 
 				// Divide the dataset in two:
-				var dataset2 = data.slice(12,24),
-					dataset1 = data.slice(0,12);
+				var dataset2 = dataGloabal.slice(12,24),
+					dataset1 = dataGloabal.slice(0,12);
 				
 				// Append a new figure to the DOM:
 				figure = d3.select( 'body' )
@@ -119,12 +140,12 @@
 				Chart.legend( causes );
 
 				// Create a slider:
-                Chart.slider( 0, data.length, 1 ); // minVal, maxVal, step
+                Chart.slider( 0, dataGloabal.length, 1 ); // minVal, maxVal, step
                 console.log('11111111111111111111111111');
-            })
-            .catch(function (error) {
-                // handle error   
-            })
+            // })
+        //     .catch(function (error) {
+        //         // handle error   
+        //     })
     </script>
 </body>
 

@@ -42,7 +42,7 @@
 				.html('April 1854 - March 1855');
             
 			// Load the JSON data:
-			d3.json( 'data.json', function( data ) {
+                d3.json( 'data.json', function( data ) {
 				// Data from: http://ocp.hul.harvard.edu/dl/contagion/010164675
                 data=[
     {
@@ -257,9 +257,9 @@
 					.angle( function(d) { return d.date.getMonth(); } )
 					.area( function(d, i) { return [d.disease, d.wounds, d.other]; } );							
 
-				// Bind the data and generate a new chart:
-				figure.datum( dataset1 )
-					.attr('class', 'chart figure1')
+				// Bind the second dataset and generate a new chart:
+				figure.datum( dataset2 )
+					.attr('class', 'chart figure2')
 					.call( rose );	
 
 				// Append a new figure to the DOM:
@@ -270,12 +270,13 @@
 				width = parseInt( figure.style( 'width' ), 10 );
 
 				// Update the chart generator settings:
-				rose.width( width )
-					.delay( 3000 );
+				// rose.width( width )
+				// 	.delay( 3000 );
 
-				// Bind the second dataset and generate a new chart:
-				figure.datum( dataset2 )
-					.attr('class', 'chart figure2')
+				
+                // Bind the data and generate a new chart:
+				figure.datum( dataset1 )
+					.attr('class', 'chart figure1')
 					.call( rose );	
 
 				// Append a caption:
@@ -287,7 +288,7 @@
 				Chart.legend( causes );
 
 				// Create a slider:
-				Chart.slider( 0, data.length, 1 ); // minVal, maxVal, step
+				// Chart.slider( 0, data.length, 1 ); // minVal, maxVal, step
 				
 			});	
 
